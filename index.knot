@@ -1,0 +1,12 @@
+cls
+
+0
+:loop
+
+if= 10
+end
+1
+add
+print
+
+jmp loop
