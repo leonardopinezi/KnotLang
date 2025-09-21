@@ -6,7 +6,7 @@ KnotLang is a **stack-based programming language** inspired by Forth, designed f
 
 ## Features
 
-- Stack-based operations (`push`, `pop`, `add`, `sub`, `swap`, `tochar`)
+- Stack-based operations (`<number>`, `pop`, `add`, `sub`, `swap`, `tochar`)
 - Conditional jumps (`if=`, `if!`, `jmp`)
 - Reading user input (`read`)
 - Printing values (`print`) and ASCII strings (`prints`)
@@ -20,7 +20,7 @@ KnotLang is a **stack-based programming language** inspired by Forth, designed f
 1. **Download or clone the repository**:
 
 ```bash
-git clone https://github.com/yourusername/KnotLang.git
+git clone https://github.com/leonardopinezi/KnotLang.git
 cd KnotLang
 ```
 
@@ -101,7 +101,7 @@ end
 
 | Command | Description |
 |---------|-------------|
-| `push <number>` | Push a number to the stack |
+| `<number>` | Push a number to the stack |
 | `pop` | Remove the top value from the stack |
 | `add` | Pop the top two numbers, add them, push the result |
 | `sub` | Pop the top two numbers, subtract second from top, push the result |
