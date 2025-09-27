@@ -6,12 +6,13 @@ KnotLang is a **stack-based programming language** inspired by Forth, designed f
 
 ## Features
 
-- Stack-based operations (`<number>`, `pop`, `add`, `sub`, `swap`, `tochar`)
-- Conditional jumps (`if=`, `if!`, `jmp`)
-- Reading user input (`read`)
-- Printing values (`print`) and ASCII strings (`prints`)
-- Clear screen (`cls`)
-- Easy-to-use syntax with labels for jumps
+* Stack-based operations (`push <number>`, `pop`, `add`, `sub`, `swap`, `tochar`, `toint`)
+* Conditional jumps (`if=`, `if!`, `jmp`)
+* Reading user input (`read`)
+* Printing values (`print`) and ASCII strings (`prints`)
+* Clear screen (`cls`)
+* Random number generation (`rand`)
+* Easy-to-use syntax with labels for jumps
 
 ---
 
@@ -24,27 +25,20 @@ git clone https://github.com/leonardopinezi/KnotLang.git
 cd KnotLang
 ```
 
-2. **Make the installer executable**:
+2. **Make the interpreter executable**:
 
 ```bash
+chmod +x knotlang.sh
 chmod +x install.sh
 ```
 
-3. **Run the installer**:
+3. **Install the interpreter**:
 
 ```bash
-./install.sh
+bash install.sh
 ```
 
-You will be prompted to enter the installation directory. Press **Enter** to use the default `/usr/local/bin`.
-
-4. **Reload your shell**:
-
-```bash
-source ~/.bashrc
-```
-
-After this, you can run KnotLang from anywhere using the command:
+4. **Run a KnotLang program**:
 
 ```bash
 knotlang path/to/your_program.knot
@@ -57,8 +51,8 @@ knotlang path/to/your_program.knot
 ### Push numbers to the stack
 
 ```
-5
-10
+push 5
+push 10
 add
 print
 end
@@ -73,7 +67,7 @@ Output:
 ### Push a string and print it
 
 ```
-pushs "Hello, World!"
+pushs Hello, World!
 prints
 end
 ```
@@ -84,72 +78,90 @@ Output:
 Hello, World!
 ```
 
-### Conditional jumps
+### Generate a random number between 0 and 10
 
 ```
-:loop
-1
+push 10
+rand
 print
-if!=0
-jmp loop
 end
+```
+
+Output (example):
+
+```
+7
 ```
 
 ---
 
 ## Stack Operations
 
-| Command | Description |
-|---------|-------------|
-| `<number>` | Push a number to the stack |
-| `pop` | Remove the top value from the stack |
-| `add` | Pop the top two numbers, add them, push the result |
-| `sub` | Pop the top two numbers, subtract second from top, push the result |
-| `swap` | Swap the top two values |
-| `tochar` | Convert top number to ASCII character |
-| `prints` | Convert stack values to string and print |
+| Command         | Description                                                        |
+| --------------- | ------------------------------------------------------------------ |
+| `push <number>` | Push a number to the stack                                         |
+| `pop`           | Remove the top value from the stack                                |
+| `add`           | Pop the top two numbers, add them, push the result                 |
+| `sub`           | Pop the top two numbers, subtract second from top, push the result |
+| `swap`          | Swap the top two values                                            |
+| `tochar`        | Convert top number to ASCII character                              |
+| `toint`         | Convert top character to its ASCII number                          |
+| `prints`        | Convert stack values to string and print                           |
+| `kill`          | Clear the entire stack                                             |
+| `rand`          | Get the last stack number, and push a random number based on it    |
 
 ---
 
 ## Control Flow
 
-| Command | Description |
-|---------|-------------|
-| `jmp <label>` | Jump to a label |
-| `if=<value>` | Jump next line if top of stack is not equal to value |
-| `if!=<value>` | Jump next line if top of stack is equal to value |
-| `:label` | Define a label for jumps |
+| Command       | Description                                          |
+| ------------- | ---------------------------------------------------- |
+| `jmp <label>` | Jump to a label                                      |
+| `if= <value>`  | Skip next line if top of stack is not equal to value |
+| `if!= <value>` | Skip next line if top of stack is equal to value     |
+| `:label`      | Define a label for jumps                             |
 
 ---
 
 ## Input/Output
 
-| Command | Description |
-|---------|-------------|
-| `read` | Read user input and push it to the stack |
-| `print` | Print the top value of the stack |
-| `prints` | Print stack as ASCII characters |
-| `cls` | Clear terminal screen |
+| Command       | Description                              |
+| ------------- | ---------------------------------------- |
+| `read`        | Read user input and push it to the stack |
+| `prints`      | Print stack as ASCII characters          |
+| `echo <text>` | Print text literally                     |
+| `cls`         | Clear terminal screen                    |
 
 ---
 
-## Example Program
+## Example: Number Guessing Game
 
 ```
-pushs "Enter a number: "
-prints
+echo Welcome to Number Guessing Game!
+push 10
+rand
+set numero_secreto
+
+:loop
+echo Guess a number between 0 and 10:
 read
-dup
-pushs "You entered: "
-prints
-tochar
-prints
+set palpite
+
+get palpite
+get numero_secreto
+sub
+push 0
+if=
+jmp! wrong
+
+echo Congrats! You guessed it!
+jmp end_game
+
+:wrong
+echo Try again!
+jmp loop
+
+:end_game
+echo Game over!
 end
 ```
-
----
-
-## License
-
-MIT License
-
